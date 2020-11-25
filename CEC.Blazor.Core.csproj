@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <Version>0.0.1</Version>
+    <Title>CEC Blazor Core Framework Components</Title>
+    <Version>0.0.1</Version>
+    <Authors>Shaun Curtis</Authors>
+    <Company>Cold Elm</Company>
+    <Copyright>Shaun Curtis</Copyright>
+    <RepositoryUrl>https://github.com/ShaunCurtis/CEC.Blazor.Core</RepositoryUrl>
+    <PackageIcon>ColdElm.png</PackageIcon>
+    <PackageReleaseNotes>Pre Released Version for personal use.  It will change!</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>This packages contains the core components for the CEC Blazor Framework.  Currently under development so NOT FOR PRODUCTION</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
+  </ItemGroup>
+</Project>
