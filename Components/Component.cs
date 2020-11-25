@@ -78,7 +78,7 @@ namespace CEC.Blazor.Core
         /// Only called once
         /// </summary>
         /// <returns></returns>
-        protected Task OnAttachAsync() => Task.CompletedTask;
+        protected virtual Task OnAttachAsync() => Task.CompletedTask;
 
         /// <summary>
         /// Runs Render on the UI Thread

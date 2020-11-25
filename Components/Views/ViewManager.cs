@@ -132,9 +132,9 @@ namespace CEC.Blazor.Core
         /// </summary>
         /// <param name="view"></param>
         /// <returns></returns>
-        public bool IsCurrentView(Type view) => this.ViewData?.PageType == view;
+        public bool IsCurrentView(Type view) => this.ViewData?.ViewType == view;
 
-        public bool IsView => this._ViewData?.PageType != null;
+        public bool IsView => this._ViewData?.ViewType != null;
 
         /// <inheritdoc />
         public Task SetParametersAsync(ParameterView parameters)
@@ -238,15 +238,21 @@ namespace CEC.Blazor.Core
             builder =>
             {
                 // Adds the Modal Dialog infrastructure
-                var pageLayoutType = ViewData?.PageType?.GetCustomAttribute<LayoutAttribute>()?.LayoutType ?? DefaultLayout;
-                builder.OpenComponent(0, ModalType);
-                builder.AddComponentReferenceCapture(1, modal => this.ModalDialog = (IModal)modal);
-                builder.CloseComponent();
+                var viewLayoutType = ViewData?.ViewType?.GetCustomAttribute<LayoutAttribute>()?.LayoutType ?? DefaultLayout;
+                // Checks if we have a custom view assigned in ViewData and if so checks if it's valid, and then uses it
+                if (this._ViewData.LayoutType != null && typeof(LayoutComponentBase).IsAssignableFrom(this._ViewData.LayoutType)) viewLayoutType = this._ViewData.LayoutType;
+                // Checks if we have a modal dialog and if so adds it.
+                if (ModalType != null)
+                {
+                    builder.OpenComponent(0, ModalType);
+                    builder.AddComponentReferenceCapture(1, modal => this.ModalDialog = (IModal)modal);
+                    builder.CloseComponent();
+                }
                 // Adds the Layout component
-                if (pageLayoutType != null)
+                if (viewLayoutType != null)
                 {
                     builder.OpenComponent<LayoutView>(2);
-                    builder.AddAttribute(3, nameof(LayoutView.Layout), pageLayoutType);
+                    builder.AddAttribute(3, nameof(LayoutView.Layout), viewLayoutType);
                     // Adds the view render fragment into the layout component
                     if (this._ViewData != null)
                         builder.AddAttribute(4, nameof(LayoutView.ChildContent), this._viewFragment);
@@ -271,7 +277,7 @@ namespace CEC.Blazor.Core
                 try
                 {
                     // Adds the defined view with any defined parameters
-                    builder.OpenComponent(0, _ViewData.PageType);
+                    builder.OpenComponent(0, _ViewData.ViewType);
                     if (this._ViewData.ViewParameters != null)
                     {
                         foreach (var kvp in _ViewData.ViewParameters)

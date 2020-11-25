@@ -10,9 +10,14 @@ namespace CEC.Blazor.Core
     public sealed class ViewData
     {
         /// <summary>
+        /// Gets the type of the View.
+        /// </summary>
+        public Type ViewType { get; set;}
+
+        /// <summary>
         /// Gets the type of the page matching the route.
         /// </summary>
-        public Type PageType { get; set;}
+        public Type LayoutType { get; set; }
 
         /// <summary>
         /// Parameter values to add to the Route when created
@@ -29,11 +34,11 @@ namespace CEC.Blazor.Core
         /// </summary>
         /// <param name="viewType">The type of the view, which must implement <see cref="IView"/>.</param>
         /// <param name="viewValues">The view parameter values.</param>
-        public ViewData(Type pageType, Dictionary<string, object> viewValues)
+        public ViewData(Type viewType, Dictionary<string, object> viewValues)
         {
-            if (pageType == null) throw new ArgumentNullException(nameof(pageType));
-            if (!typeof(IView).IsAssignableFrom(pageType)) throw new ArgumentException($"The view must implement {nameof(IView)}.", nameof(pageType));
-            this.PageType = pageType;
+            if (viewType == null) throw new ArgumentNullException(nameof(viewType));
+            if (!typeof(IView).IsAssignableFrom(viewType)) throw new ArgumentException($"The view must implement {nameof(IView)}.", nameof(viewType));
+            this.ViewType = viewType;
             if (viewValues != null) this.ViewParameters = viewValues;
         }
 
