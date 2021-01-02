@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
-using System;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+using Microsoft.AspNetCore.Components;
 
 namespace CEC.Blazor.Core
 {

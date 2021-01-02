@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -8,6 +12,14 @@ using System.Threading.Tasks;
 
 namespace CEC.Blazor.Core
 {
+    /// <summary>
+    /// Abstract base class for all forms it:
+    /// - Impelements Scoped Services to provide Component based scoping of Scoped Services
+    /// - Tracks the user if Authentication is enabled
+    /// - provides basic exit and close methods from the form depending on when it is part of a view or a Modal Dialog
+    /// - Implements IDisposable for displosing of event handlers
+    /// - Implements IForm for labelling as a UI Form
+    /// </summary>
     public abstract class FormBase : Component, IForm, IDisposable
     {
         private IServiceScope _scope;
@@ -32,21 +44,6 @@ namespace CEC.Blazor.Core
         /// </summary>
         [Inject]
         protected IServiceScopeFactory ScopeFactory { get; set; } = default!;
-
-
-        ///// <summary>
-        ///// Injected Configuration service giving access to the Application Configurstion Data
-        ///// </summary>
-        //[Inject]
-        //protected IConfiguration AppConfiguration { get; set; }
-
-        ///// <summary>
-        ///// Injected Property for the Browser Service
-        ///// Provides access to JS based browser routiines such as fining the browser dimensions and resetting
-        ///// the browser history
-        ///// </summary>
-        //[Inject]
-        //public BrowserService BrowserService { get; set; }
 
         /// <summary>
         /// Cascaded Parameter if the Component is used in Modal mode
@@ -124,19 +121,33 @@ namespace CEC.Blazor.Core
             }
         }
 
-        /// Exit methods for the form
-
+        /// <summary>
+        /// Exit method for the form
+        /// If the form is a Modal Dialog it closes the Dialog
+        /// Otherwise it changes the displayed view to the previously loaded view.
+        /// </summary>
         public void Exit(ModalResult result)
         {
             if (IsModal) this.ModalParent.Close(result);
             else this.ViewManager.LoadViewAsync(this.ViewManager.LastViewData);
         }
 
+        /// <summary>
+        /// Exit method for the form
+        /// If the form is a Modal Dialog it closes the Dialog
+        /// Otherwise it changes the displayed view to the previously loaded view.
+        /// </summary>
         public void Exit()
         {
             if (IsModal) this.ModalParent.Close(ModalResult.Exit());
             else this.ViewManager.LoadViewAsync(this.ViewManager.LastViewData);
         }
+
+        /// <summary>
+        /// Exit method for the form
+        /// If the form is a Modal Dialog it closes the Dialog
+        /// Otherwise it changes the displayed view to the previously loaded view.
+        /// </summary>
 
         public void Cancel()
         {
@@ -144,6 +155,11 @@ namespace CEC.Blazor.Core
             else this.ViewManager.LoadViewAsync(this.ViewManager.LastViewData);
         }
 
+        /// <summary>
+        /// Exit method for the form
+        /// If the form is a Modal Dialog it closes the Dialog
+        /// Otherwise it changes the displayed view to the previously loaded view.
+        /// </summary>
         public void OK()
         {
             if (IsModal) this.ModalParent.Close(ModalResult.OK());

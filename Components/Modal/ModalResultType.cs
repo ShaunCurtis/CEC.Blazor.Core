@@ -1,9 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
 
 namespace CEC.Blazor.Core
 {
+    /// <summary>
+    /// Used by the ModalResult Class
+    /// </summary>
     public enum ModalResultType
     {
         NoSet,

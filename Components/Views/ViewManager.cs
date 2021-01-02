@@ -1,4 +1,9 @@
-﻿#nullable disable warnings
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+#nullable disable warnings
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -12,8 +17,11 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace CEC.Blazor.Core
 {
     /// <summary>
-    /// Displays the specified view component, rendering it inside its layout
+    /// Core Replacement for the Router
+    /// Switches the SPA to running like an Application rather than a Web Site
+    /// Manages and Loads the specified view component, rendering it inside its layout
     /// and any further nested layouts.
+    /// Cascades itself so all child components have access to the running view manager
     /// </summary>
     public class ViewManager : IComponent
     {
@@ -78,7 +86,7 @@ namespace CEC.Blazor.Core
             get
             {
                 var newest = ViewHistory.Max(item => item.Key);
-                if (newest != null) return ViewHistory[newest];
+                if (newest != default) return ViewHistory[newest];
                 else return null;
             }
         }
@@ -349,7 +357,7 @@ namespace CEC.Blazor.Core
                             else if (Int32.TryParse(set.Value, out int intvalue)) value = intvalue;
                             else if (Decimal.TryParse(set.Value, out decimal decvalue)) value = decvalue;
                             else value = set.Value;
-                            viewData.SetParameter(set.Key.Replace("Param-", ""), value);
+                            viewData.ViewParameters.Set(set.Key.Replace("Param-", ""), value);
                         }
                         if (set.Key.StartsWith("Field-"))
                         {
@@ -358,7 +366,7 @@ namespace CEC.Blazor.Core
                             else if (Int32.TryParse(set.Value, out int intvalue)) value = intvalue;
                             else if (Decimal.TryParse(set.Value, out decimal decvalue)) value = decvalue;
                             else value = set.Value;
-                            viewData.SetField(set.Key.Replace("Field-", ""), value);
+                            viewData.ViewFields.Set(set.Key.Replace("Field-", ""), value);
                         }
                     }
                 }

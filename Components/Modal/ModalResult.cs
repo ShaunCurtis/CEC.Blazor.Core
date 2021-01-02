@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
 
 namespace CEC.Blazor.Core
 {
+    /// <summary>
+    /// Class to encapsulate the data returned by a Modal Dialog
+    /// </summary>
     public class ModalResult
     {
         public ModalResultType ResultType { get; private set; } = ModalResultType.NoSet;

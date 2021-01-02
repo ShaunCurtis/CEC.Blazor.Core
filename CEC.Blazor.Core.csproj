@@ -1,26 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <RazorLangVersion>3.0</RazorLangVersion>
-    <Version>0.0.4</Version>
+    <TargetFramework>net5.0</TargetFramework>
+    <Version>1.0.0</Version>
     <Title>CEC Blazor Core Framework Components</Title>
     <Authors>Shaun Curtis</Authors>
     <Company>Cold Elm</Company>
     <Copyright>Shaun Curtis</Copyright>
     <RepositoryUrl>https://github.com/ShaunCurtis/CEC.Blazor.Core</RepositoryUrl>
     <PackageIcon>ColdElm.png</PackageIcon>
-    <PackageReleaseNotes>Pre Released Version for personal use.  It will change!</PackageReleaseNotes>
+    <PackageReleaseNotes>First Release Version</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>This package contains the core components for the CEC Blazor Framework.  Under development - NOT FOR PRODUCTION</Description>
+    <Description>This package contains the core components for the CEC Blazor Framework.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>

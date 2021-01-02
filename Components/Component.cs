@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿/// =================================
+/// Author: Shaun Curtis, Cold Elm
+/// License: MIT
+/// ==================================
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
@@ -8,16 +12,27 @@ namespace CEC.Blazor.Core
 {
     /// <summary>
     /// Abstract Base Class implementing basic IComponent functions
-    /// A lot of the code is common with ComponentBase
+    /// Much of the code is common with ComponentBase
     /// Blazor Team copyright notices recognised.
     /// </summary>
     public abstract class Component : IComponent, IHandleEvent, IHandleAfterRender
     {
+        // The Render Fragment passed by the component to the Renderer when the component initialiates a Render
         private readonly RenderFragment _renderFragment;
+        
+        // The RenderHandle passed to the component by the Renderer when the Cpmponent is attached to the RenderTree
         private RenderHandle _renderHandle;
+
+        // Bool global used to track when the component is it's first render cycle
         private bool _firstRender = true;
+
+        // Bool global set to false when _renderFragment is first run by the Renderer
         private bool _hasNeverRendered = true;
+
+        // Bool gobal set when the component queues the _renderfragment onto the Render Queue.  Set back to false by the _renderfragment when it's run by the Renderer.
         private bool _hasPendingQueuedRender;
+
+        // Bool global to track the after render process 
         private bool _hasCalledOnAfterRender;
 
         /// <summary>
@@ -53,7 +68,9 @@ namespace CEC.Blazor.Core
 
 
         /// <summary>
-        /// Notifies the component that things have changed and it needs queue a render event on the Render.
+        /// Method called when things have changed on the component and it needs queue a render event on the Render Queue.
+        /// It checks if no request is already queued and passes the Render Queue the _renderFragment.
+        /// If there's already a render request queued then the current changes will be handled by the queued  request.
         /// </summary>
         protected void Render()
         {
@@ -74,17 +91,23 @@ namespace CEC.Blazor.Core
         }
 
         /// <summary>
-        /// Method Called on a Component when it is attached to the RenderTree
+        /// Method Called on a Component by the Renderer when it's attached to the RenderTree
         /// Only called once
         /// </summary>
         /// <returns></returns>
         protected virtual Task OnAttachAsync() => Task.CompletedTask;
 
         /// <summary>
-        /// Runs Render on the UI Thread
+        /// Runs the Render Method on the UI Thread
         /// </summary>
         /// <returns></returns>
         protected async Task RenderAsync() => await this.InvokeAsync(Render);
+
+        /// <summary>
+        /// Event handler version to run Render on the UI Thread
+        /// </summary>
+        /// <returns></returns>
+        protected async void RenderAsync(object sender, EventArgs e) => await this.InvokeAsync(Render);
 
         /// <summary>
         /// Returns a flag to indicate whether the component should render.
@@ -118,6 +141,7 @@ namespace CEC.Blazor.Core
 
         /// <summary>
         /// IComponent Attach implementation
+        /// Called by the Renderer when the component is attached to the Render Tree
         /// </summary>
         /// <param name="renderHandle"></param>
         async void IComponent.Attach(RenderHandle renderHandle)
@@ -131,9 +155,9 @@ namespace CEC.Blazor.Core
             await OnAttachAsync();
         }
         
-
         /// <summary>
         /// Implementation of the IComponent SetParametersAsync
+        /// Called the the Renderer when one of more externally linked Parameters have changed
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -170,7 +194,8 @@ namespace CEC.Blazor.Core
         }
 
         /// <summary>
-        /// Principle exposed Render "Event"
+        /// Exposed Render "Event"
+        /// Gets called when SetParametersAsync has been called by the Renderer
         /// </summary>
         /// <param name="firstRender"></param>
         /// <returns></returns>
