@@ -1,0 +1,10 @@
+﻿@namespace CEC.Blazor.Core
+
+@inherits BaseComponent
+
+@if (this.Display)
+{
+    <a class="@this.CssClass" @onclick="(e) => this.LoadView(this.viewData)">
+        @ChildContent
+    </a>
+}

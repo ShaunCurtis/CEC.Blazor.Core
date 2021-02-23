@@ -1,0 +1,14 @@
+﻿@namespace CEC.Blazor.Core
+@implements IModal
+@inherits BaseComponent
+
+@if (this.Display)
+{
+    <CascadingValue Value="(IModal)this">
+        <div class="modal-background">
+            <div class="modal-content" style="@this.Width">
+                @this._Content
+            </div>
+        </div>
+    </CascadingValue>
+}
