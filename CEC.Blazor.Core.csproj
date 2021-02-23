@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>1.0.1</Version>
+    <Version>1.0.1.1</Version>
     <Title>CEC Blazor Core Framework Components</Title>
     <Authors>Shaun Curtis</Authors>
     <Company>Cold Elm</Company>
